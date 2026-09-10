@@ -202,44 +202,79 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="top" className="cookie-dots relative min-h-[720px] overflow-hidden bg-pastel-pink pt-24 sm:min-h-[760px] sm:pt-28">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 pb-20 pt-10 md:grid-cols-[1.05fr_.95fr] md:pb-24 md:pt-16">
-        <div className="order-2 text-center md:order-1 md:text-right">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-card/80 bg-card/70 px-4 py-2 text-sm font-bold text-pastel-pink-deep shadow-pink backdrop-blur">
-              مخبوز يومياً بكل حب
-              <Cookie className="h-4 w-4" aria-hidden />
+    <section id="top" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-hero-bg pt-24 sm:pt-28">
+      {/* Soft radial glow */}
+      <div className="hero-glow pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[140%] w-[140%] -translate-x-1/2 -translate-y-1/2" />
+
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-20 pt-10 md:grid-cols-2 md:gap-16 md:pb-24 md:pt-16">
+        {/* Content column — appears on the right in RTL */}
+        <Reveal className="flex flex-col items-center text-center md:items-start md:text-right">
+          <div className="space-y-3">
+            <span className="font-hero-ui block text-xs font-medium uppercase tracking-[0.3em] text-muted-rose">
+              Est. 2024
             </span>
-          </Reveal>
-          <Reveal delay={100}>
-            <h1 className="mt-6 font-display text-5xl font-extrabold leading-[1.1] text-cocoa sm:text-7xl">
-              لحظتك الحلوة
-              <span className="block text-pastel-pink-deep">تبدأ من Tara</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={200}>
-            <p className="mx-auto mt-5 max-w-lg text-lg font-medium leading-8 text-foreground/70 md:mx-0">
-              كوكيز طازجة ومشروبات محضّرة لتضيف لمسة دافئة لكل زيارة.
+            <div className="h-px w-12 bg-pastel-pink-deep/30 mx-auto md:mx-0" />
+          </div>
+
+          <div className="mt-8 space-y-5">
+            <div className="relative">
+              <h1 className="font-hero-display text-7xl font-bold leading-none text-cocoa sm:text-8xl md:text-9xl">
+                تارا
+              </h1>
+              <div className="pointer-events-none absolute -top-4 -right-6 opacity-15 md:-right-8">
+                <div className="h-20 w-20 rounded-full border-2 border-cocoa md:h-24 md:w-24" />
+              </div>
+            </div>
+            <p className="font-hero-serif text-2xl italic leading-relaxed text-muted-rose sm:text-3xl" dir="ltr">
+              One bite is never enough
             </p>
-          </Reveal>
-          <Reveal delay={300}>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-              <a href="#cookies" className="rounded-xl bg-primary px-7 py-3.5 font-display text-base font-bold text-primary-foreground shadow-pink-strong transition-transform hover:-translate-y-1">
+          </div>
+
+          <Reveal delay={150}>
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <a
+                href="#cookies"
+                className="font-hero-ui rounded-full bg-cocoa px-10 py-4 text-sm font-medium tracking-widest text-white shadow-cocoa transition-all duration-500 hover:bg-cocoa/90 hover:-translate-y-0.5"
+              >
                 اكتشف المنيو
               </a>
-              <a href="#visit-us" className="rounded-xl border border-card bg-card/80 px-7 py-3.5 font-display text-base font-bold text-cocoa shadow-pink transition-transform hover:-translate-y-1">
+              <a
+                href="#visit-us"
+                className="font-hero-ui rounded-full border border-cocoa/20 bg-white/50 px-10 py-4 text-sm font-medium tracking-widest text-cocoa backdrop-blur-sm transition-all duration-500 hover:bg-white/80 hover:-translate-y-0.5"
+              >
                 زورونا
               </a>
             </div>
           </Reveal>
-        </div>
-        <Reveal className="order-1 md:order-2" delay={120}>
-          <div className="relative mx-auto aspect-square w-full max-w-[430px]">
-            <div className="absolute inset-5 rotate-3 rounded-[3rem] bg-soft-green shadow-pink-strong" />
-            <div className="absolute inset-5 -rotate-3 overflow-hidden rounded-[3rem] border-8 border-card bg-card shadow-pink-strong">
-              <img src={cookieClassic} alt="كوكيز Tara الطازجة" className="h-full w-full object-cover" width={1024} height={768} />
+        </Reveal>
+
+        {/* Image column — appears on the left in RTL */}
+        <Reveal delay={120} className="relative flex items-center justify-center">
+          {/* Decorative blurred orbs */}
+          <div className="absolute h-72 w-72 rounded-full bg-pastel-pink blur-3xl opacity-60 md:h-[500px] md:w-[500px]" />
+          <div className="absolute h-64 w-64 rounded-full border border-cocoa/5 md:h-[420px] md:w-[420px]" />
+
+          <div className="relative group">
+            {/* Soft glow behind the cookie */}
+            <div className="absolute inset-0 scale-90 rounded-full bg-white/30 blur-2xl" />
+
+            <div className="relative w-72 md:w-[420px] lg:w-[450px]">
+              <img
+                src={cookieClassic}
+                alt="كوكيز Tara الطازجة"
+                width={1024}
+                height={768}
+                className="aspect-[4/5] w-full rotate-3 rounded-3xl border-8 border-white bg-card object-cover shadow-cocoa transition-transform duration-700 group-hover:rotate-0 group-hover:scale-[1.02]"
+              />
+
+              {/* Floating glass badge */}
+              <div className="absolute -bottom-8 -left-8 max-w-[220px] -rotate-3 rounded-2xl border border-white/40 bg-white/70 p-6 shadow-pink-strong backdrop-blur-xl transition-transform duration-500 group-hover:rotate-0 md:-left-12">
+                <h3 className="font-hero-display text-2xl text-cocoa">تارا كافيه</h3>
+                <p className="font-hero-serif mt-2 text-lg leading-snug text-muted-rose">
+                  كوكيز طازجة لأحلى لحظاتك
+                </p>
+              </div>
             </div>
-            <img src={logoAsset.url} alt="شعار Tara" className="logo-float absolute -bottom-2 -right-2 h-28 w-28 rounded-full object-cover shadow-pink-strong ring-4 ring-card sm:h-32 sm:w-32" width={128} height={128} />
           </div>
         </Reveal>
       </div>
