@@ -305,28 +305,44 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
             <span className="hidden text-sm font-semibold text-foreground/55 sm:block">{section.items.length} أصناف</span>
           </div>
         </Reveal>
-        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
           {section.items.map((item, i) => (
             <Reveal key={item.name} delay={(i % 6) * 65} className="h-full">
-              <article className="menu-card group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card p-2.5 shadow-pink transition-all duration-300 hover:-translate-y-1.5 hover:shadow-pink-strong sm:p-3">
-                <div className="aspect-[4/3] w-full overflow-hidden rounded-xl bg-muted">
+              <article className="menu-card group relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-card p-3 card-shadow transition-all duration-500 hover:-translate-y-2 hover:card-shadow-hover sm:p-4">
+                {/* Image container */}
+                <div className="relative aspect-square w-full overflow-hidden rounded-[1.5rem] bg-pastel-pink/30">
                   <img
                     src={item.image}
                     alt={item.name}
                     loading="lazy"
                     width={1024}
                     height={768}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+                  {/* Price badge */}
+                  <div className="absolute top-3 right-3">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-pastel-pink-deep/90 px-3 py-1.5 text-sm font-bold text-white shadow-pink backdrop-blur-md">
+                      <span className="text-[10px] font-normal opacity-90">ل.س</span>
+                      {item.price}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 px-1 pb-1 pt-4 sm:px-2">
-                  <h3 className="font-display text-base font-bold leading-snug text-cocoa sm:text-lg">{item.name}</h3>
-                  <span
-                    className="w-fit shrink-0 rounded-lg bg-pastel-pink px-2.5 py-1.5 text-xs font-bold text-pastel-pink-deep sm:text-sm"
-                  >
-                    {item.price} ل.س
-                  </span>
+
+                {/* Content */}
+                <div className="flex min-w-0 flex-1 flex-col items-center justify-center px-1 pb-1 pt-5 text-center sm:px-2">
+                  <h3 className="font-card text-lg font-bold leading-tight text-cocoa sm:text-xl md:text-2xl">
+                    {item.name}
+                  </h3>
+                  <div className="mt-2 flex items-center justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
+                    <span className="text-xs font-semibold text-pastel-pink-deep/60">Tara Special</span>
+                    <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
+                  </div>
                 </div>
+
+                {/* Decorative hover glow */}
+                <div className="pointer-events-none absolute -bottom-2 -right-2 h-16 w-16 rounded-full bg-pastel-pink/30 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="pointer-events-none absolute inset-0 rounded-[2rem] border border-white/50" />
               </article>
             </Reveal>
           ))}

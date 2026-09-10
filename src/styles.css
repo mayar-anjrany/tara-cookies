@@ -55,6 +55,7 @@
   --font-hero-display: "Amiri", "Outfit", system-ui, sans-serif;
   --font-hero-serif: "Cormorant Garamond", "Georgia", serif;
   --font-hero-ui: "Montserrat", "Figtree", system-ui, sans-serif;
+  --font-card: "Zain", "Outfit", system-ui, sans-serif;
 }
 
 :root {
@@ -164,6 +165,14 @@
     color: var(--soft-green-deep);
     background: var(--card);
   }
+}
+
+@utility card-shadow {
+  box-shadow: 0 20px 40px -14px color-mix(in oklab, var(--pastel-pink-deep) 22%, transparent);
+}
+
+@utility card-shadow-hover {
+  box-shadow: 0 30px 60px -14px color-mix(in oklab, var(--pastel-pink-deep) 32%, transparent);
 }
 
 @keyframes logo-float {
