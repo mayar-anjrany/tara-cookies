@@ -52,6 +52,9 @@
 @theme {
   --font-display: "Outfit", system-ui, sans-serif;
   --font-body: "Figtree", system-ui, sans-serif;
+  --font-hero-display: "Amiri", "Outfit", system-ui, sans-serif;
+  --font-hero-serif: "Cormorant Garamond", "Georgia", serif;
+  --font-hero-ui: "Montserrat", "Figtree", system-ui, sans-serif;
 }
 
 :root {
@@ -87,11 +90,15 @@
   --cream: oklch(0.985 0.012 65);
   --warm: oklch(0.88 0.06 70);
   --cocoa: oklch(0.34 0.035 45);
+  --hero-bg: oklch(0.97 0.012 8);
+  --muted-rose: oklch(0.55 0.06 15);
 }
 
 @theme inline {
   --color-warm: var(--warm);
   --color-cocoa: var(--cocoa);
+  --color-hero-bg: var(--hero-bg);
+  --color-muted-rose: var(--muted-rose);
 }
 
 @layer base {
@@ -130,6 +137,14 @@
 
 @utility shadow-pink-strong {
   box-shadow: 0 24px 54px -24px color-mix(in oklab, var(--pastel-pink-deep) 48%, transparent);
+}
+
+@utility shadow-cocoa {
+  box-shadow: 0 28px 60px -24px color-mix(in oklab, var(--cocoa) 22%, transparent);
+}
+
+@utility hero-glow {
+  background: radial-gradient(circle at center, color-mix(in oklab, var(--pastel-pink) 55%, transparent) 0%, transparent 65%);
 }
 
 @utility footer-link {
