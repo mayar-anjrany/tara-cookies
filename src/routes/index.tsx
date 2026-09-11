@@ -319,20 +319,26 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
                     height={768}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  {/* Price badge */}
-                  <div className="absolute top-3 right-3">
-                    <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-pastel-pink-deep/90 px-3 py-1.5 text-sm font-bold text-white shadow-pink backdrop-blur-md">
-                      <span className="text-[10px] font-normal opacity-90">ل.س</span>
-                      {item.price}
-                    </span>
-                  </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex min-w-0 flex-1 flex-col items-center justify-center px-1 pb-1 pt-5 text-center sm:px-2">
-                  <h3 className="font-card text-lg font-bold leading-tight text-cocoa sm:text-xl md:text-2xl">
+                <div className="flex min-w-0 flex-1 flex-col items-center justify-center px-1 pb-1 pt-4 text-center sm:px-2 sm:pt-5">
+                  <h3 className="font-card text-base font-bold leading-tight text-cocoa sm:text-lg md:text-xl">
                     {item.name}
                   </h3>
+
+                  {/* Prices */}
+                  <div className="mt-3 flex w-full items-center justify-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-pastel-pink/60 px-2.5 py-1 text-xs font-bold text-pastel-pink-deep sm:text-sm">
+                      <span className="font-normal opacity-75">ل.س</span>
+                      {item.price.sy}
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-soft-green/60 px-2.5 py-1 text-xs font-bold text-soft-green-deep sm:text-sm">
+                      <span className="font-normal opacity-75">$</span>
+                      {item.price.usd}
+                    </span>
+                  </div>
+
                   <div className="mt-2 flex items-center justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
                     <span className="text-xs font-semibold text-pastel-pink-deep/60">Tara Special</span>
