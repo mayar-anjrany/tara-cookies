@@ -8,6 +8,7 @@ import {
   Instagram,
   MessageCircle,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Reveal } from "../components/Reveal";
 
 import logoAsset from "../assets/tara-logo.jpg.asset.json";
@@ -51,7 +52,7 @@ export const Route = createFileRoute("/")({
 /* بيانات مؤقتة — تُستبدل بالأسعار والأصناف الأصلية عند توفرها          */
 /* ------------------------------------------------------------------ */
 
-type MenuItem = { name: string; price: string; image: string };
+type MenuItem = { name: string; price: { sy: string; usd: string }; image: string };
 type MenuSection = {
   id: string;
   title: string;
@@ -69,21 +70,21 @@ const SECTIONS: MenuSection[] = [
     tint: "bg-pastel-pink",
     chip: "bg-pastel-pink-deep",
     items: [
-      { name: "كوكيز شوكولاتة كلاسيك", price: "25,000", image: cookieClassic },
-      { name: "M&M's", price: "30,000", image: cookieClassic },
-      { name: "لوتس", price: "30,000", image: cookieLotus },
-      { name: "دوبل شوكو", price: "30,000", image: cookieClassic },
-      { name: "ريد فيلفت", price: "30,000", image: cookieRedVelvet },
-      { name: "شوفان", price: "28,000", image: cookieClassic },
-      { name: "بستاشيو", price: "35,000", image: cookiePistachio },
-      { name: "بيرث داي", price: "35,000", image: cookieRedVelvet },
-      { name: "أوريو", price: "30,000", image: cookieClassic },
-      { name: "سمورز", price: "32,000", image: cookieLotus },
-      { name: "شوكو البندق", price: "32,000", image: cookiePistachio },
-      { name: "كراميل", price: "30,000", image: cookieLotus },
-      { name: "كندر", price: "35,000", image: cookieClassic },
-      { name: "فراولة", price: "30,000", image: cookieRedVelvet },
-      { name: "مونستر", price: "38,000", image: cookiePistachio },
+      { name: "كوكيز شوكولاتة كلاسيك", price: { sy: "25,000", usd: "1.5" }, image: cookieClassic },
+      { name: "M&M's", price: { sy: "30,000", usd: "1.8" }, image: cookieClassic },
+      { name: "لوتس", price: { sy: "30,000", usd: "1.8" }, image: cookieLotus },
+      { name: "دوبل شوكو", price: { sy: "30,000", usd: "1.8" }, image: cookieClassic },
+      { name: "ريد فيلفت", price: { sy: "30,000", usd: "1.8" }, image: cookieRedVelvet },
+      { name: "شوفان", price: { sy: "28,000", usd: "1.7" }, image: cookieClassic },
+      { name: "بستاشيو", price: { sy: "35,000", usd: "2.1" }, image: cookiePistachio },
+      { name: "بيرث داي", price: { sy: "35,000", usd: "2.1" }, image: cookieRedVelvet },
+      { name: "أوريو", price: { sy: "30,000", usd: "1.8" }, image: cookieClassic },
+      { name: "سمورز", price: { sy: "32,000", usd: "1.9" }, image: cookieLotus },
+      { name: "شوكو البندق", price: { sy: "32,000", usd: "1.9" }, image: cookiePistachio },
+      { name: "كراميل", price: { sy: "30,000", usd: "1.8" }, image: cookieLotus },
+      { name: "كندر", price: { sy: "35,000", usd: "2.1" }, image: cookieClassic },
+      { name: "فراولة", price: { sy: "30,000", usd: "1.8" }, image: cookieRedVelvet },
+      { name: "مونستر", price: { sy: "38,000", usd: "2.3" }, image: cookiePistachio },
     ],
   },
   {
@@ -93,16 +94,16 @@ const SECTIONS: MenuSection[] = [
     tint: "bg-baby-blue",
     chip: "bg-baby-blue-deep",
     items: [
-      { name: "لاتيه فراولة", price: "30,000", image: coldFrappe },
-      { name: "ماتشا كوكب الأرض", price: "35,000", image: coldIceLatte },
-      { name: "لاتيه ماتشا", price: "32,000", image: coldIceLatte },
-      { name: "لاتيه بستاشيو", price: "35,000", image: coldIceMocha },
-      { name: "لاتيه فانيليا", price: "30,000", image: coldIceLatte },
-      { name: "كراميل ماكياتو", price: "32,000", image: coldIceMocha },
-      { name: "سبانيش لاتيه", price: "32,000", image: coldIceLatte },
-      { name: "لاتيه تيراميسو", price: "35,000", image: coldIceMocha },
-      { name: "لاتيه الموز", price: "32,000", image: coldFrappe },
-      { name: "لاتيه ماتشا بالفراولة", price: "35,000", image: coldFrappe },
+      { name: "لاتيه فراولة", price: { sy: "30,000", usd: "1.8" }, image: coldFrappe },
+      { name: "ماتشا كوكب الأرض", price: { sy: "35,000", usd: "2.1" }, image: coldIceLatte },
+      { name: "لاتيه ماتشا", price: { sy: "32,000", usd: "1.9" }, image: coldIceLatte },
+      { name: "لاتيه بستاشيو", price: { sy: "35,000", usd: "2.1" }, image: coldIceMocha },
+      { name: "لاتيه فانيليا", price: { sy: "30,000", usd: "1.8" }, image: coldIceLatte },
+      { name: "كراميل ماكياتو", price: { sy: "32,000", usd: "1.9" }, image: coldIceMocha },
+      { name: "سبانيش لاتيه", price: { sy: "32,000", usd: "1.9" }, image: coldIceLatte },
+      { name: "لاتيه تيراميسو", price: { sy: "35,000", usd: "2.1" }, image: coldIceMocha },
+      { name: "لاتيه الموز", price: { sy: "32,000", usd: "1.9" }, image: coldFrappe },
+      { name: "لاتيه ماتشا بالفراولة", price: { sy: "35,000", usd: "2.1" }, image: coldFrappe },
     ],
   },
   {
@@ -112,15 +113,15 @@ const SECTIONS: MenuSection[] = [
     tint: "bg-soft-green",
     chip: "bg-soft-green-deep",
     items: [
-      { name: "لاتيه بستاشيو", price: "32,000", image: hotLatte },
-      { name: "لاتيه", price: "26,000", image: hotLatte },
-      { name: "موكا", price: "28,000", image: hotChocolate },
-      { name: "لاتيه فانيليا", price: "28,000", image: hotLatte },
-      { name: "لاتيه ماتشا", price: "30,000", image: hotLatte },
-      { name: "هوت شوكلت", price: "28,000", image: hotChocolate },
-      { name: "كابتشينو", price: "26,000", image: hotCappuccino },
-      { name: "إسبريسو", price: "22,000", image: hotCappuccino },
-      { name: "أمريكانو", price: "24,000", image: hotCappuccino },
+      { name: "لاتيه بستاشيو", price: { sy: "32,000", usd: "1.9" }, image: hotLatte },
+      { name: "لاتيه", price: { sy: "26,000", usd: "1.6" }, image: hotLatte },
+      { name: "موكا", price: { sy: "28,000", usd: "1.7" }, image: hotChocolate },
+      { name: "لاتيه فانيليا", price: { sy: "28,000", usd: "1.7" }, image: hotLatte },
+      { name: "لاتيه ماتشا", price: { sy: "30,000", usd: "1.8" }, image: hotLatte },
+      { name: "هوت شوكلت", price: { sy: "28,000", usd: "1.7" }, image: hotChocolate },
+      { name: "كابتشينو", price: { sy: "26,000", usd: "1.6" }, image: hotCappuccino },
+      { name: "إسبريسو", price: { sy: "22,000", usd: "1.3" }, image: hotCappuccino },
+      { name: "أمريكانو", price: { sy: "24,000", usd: "1.4" }, image: hotCappuccino },
     ],
   },
   {
@@ -130,14 +131,14 @@ const SECTIONS: MenuSection[] = [
     tint: "bg-pastel-pink",
     chip: "bg-pastel-pink-deep",
     items: [
-      { name: "بلوبيري موهيتو", price: "33,000", image: mojitoBlue },
-      { name: "ستروبيري موهيتو", price: "33,000", image: mojitoStrawberry },
-      { name: "رمان موهيتو", price: "33,000", image: mojitoStrawberry },
-      { name: "بلو كوكونت موهيتو", price: "35,000", image: mojitoBlue },
-      { name: "توت موهيتو", price: "33,000", image: mojitoStrawberry },
-      { name: "ليمون موهيتو", price: "30,000", image: mojitoClassic },
-      { name: "باشن فروت موهيتو", price: "35,000", image: mojitoClassic },
-      { name: "أناناس موهيتو", price: "33,000", image: mojitoClassic },
+      { name: "بلوبيري موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoBlue },
+      { name: "ستروبيري موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoStrawberry },
+      { name: "رمان موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoStrawberry },
+      { name: "بلو كوكونت موهيتو", price: { sy: "35,000", usd: "2.1" }, image: mojitoBlue },
+      { name: "توت موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoStrawberry },
+      { name: "ليمون موهيتو", price: { sy: "30,000", usd: "1.8" }, image: mojitoClassic },
+      { name: "باشن فروت موهيتو", price: { sy: "35,000", usd: "2.1" }, image: mojitoClassic },
+      { name: "أناناس موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoClassic },
     ],
   },
 ];
@@ -167,7 +168,37 @@ function Index() {
 
 /* ---------------------------------- Header ---------------------------------- */
 
+function useActiveSection() {
+  const [activeId, setActiveId] = useState<string>("top");
+
+  useEffect(() => {
+    const sections = ["top", ...SECTIONS.map((s) => s.id)];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          // pick the one with the largest visible ratio
+          const top = visible.reduce((a, b) => (a.intersectionRatio > b.intersectionRatio ? a : b));
+          setActiveId(top.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return activeId;
+}
+
 function Header() {
+  const activeId = useActiveSection();
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl border border-card/80 bg-card/85 px-3 py-2 shadow-pink backdrop-blur-xl sm:px-5">
@@ -182,16 +213,23 @@ function Header() {
           <span className="font-display text-xl font-bold text-cocoa sm:text-2xl">Tara</span>
         </a>
         <nav aria-label="أقسام المنيو" className="flex items-center gap-0.5 overflow-x-auto sm:gap-1">
-          {SECTIONS.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className="flex shrink-0 items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-semibold text-foreground/75 transition-colors hover:bg-pastel-pink hover:text-cocoa sm:px-3"
-            >
-              <s.icon className="h-4 w-4" aria-hidden />
-              <span className="hidden sm:inline">{s.title}</span>
-            </a>
-          ))}
+          {SECTIONS.map((s) => {
+            const isActive = activeId === s.id;
+            return (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className={`flex shrink-0 items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-semibold transition-colors sm:px-3 ${
+                  isActive
+                    ? "bg-pastel-pink text-pastel-pink-deep"
+                    : "text-foreground/75 hover:bg-pastel-pink hover:text-cocoa"
+                }`}
+              >
+                <s.icon className="h-4 w-4" aria-hidden />
+                <span className="hidden sm:inline">{s.title}</span>
+              </a>
+            );
+          })}
         </nav>
       </div>
     </header>
@@ -319,20 +357,26 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
                     height={768}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  {/* Price badge */}
-                  <div className="absolute top-3 right-3">
-                    <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-pastel-pink-deep/90 px-3 py-1.5 text-sm font-bold text-white shadow-pink backdrop-blur-md">
-                      <span className="text-[10px] font-normal opacity-90">ل.س</span>
-                      {item.price}
-                    </span>
-                  </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex min-w-0 flex-1 flex-col items-center justify-center px-1 pb-1 pt-5 text-center sm:px-2">
-                  <h3 className="font-card text-lg font-bold leading-tight text-cocoa sm:text-xl md:text-2xl">
+                <div className="flex min-w-0 flex-1 flex-col items-center justify-center px-1 pb-1 pt-4 text-center sm:px-2 sm:pt-5">
+                  <h3 className="font-card text-base font-bold leading-tight text-cocoa sm:text-lg md:text-xl">
                     {item.name}
                   </h3>
+
+                  {/* Prices */}
+                  <div className="mt-3 flex w-full items-center justify-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-pastel-pink/60 px-2.5 py-1 text-xs font-bold text-pastel-pink-deep sm:text-sm">
+                      <span className="font-normal opacity-75">ل.س</span>
+                      {item.price.sy}
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-soft-green/60 px-2.5 py-1 text-xs font-bold text-soft-green-deep sm:text-sm">
+                      <span className="font-normal opacity-75">$</span>
+                      {item.price.usd}
+                    </span>
+                  </div>
+
                   <div className="mt-2 flex items-center justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
                     <span className="text-xs font-semibold text-pastel-pink-deep/60">Tara Special</span>
