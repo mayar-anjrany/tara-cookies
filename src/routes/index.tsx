@@ -51,7 +51,7 @@ export const Route = createFileRoute("/")({
 /* بيانات مؤقتة — تُستبدل بالأسعار والأصناف الأصلية عند توفرها          */
 /* ------------------------------------------------------------------ */
 
-type MenuItem = { name: string; price: string; image: string };
+type MenuItem = { name: string; price: { sy: string; usd: string }; image: string };
 type MenuSection = {
   id: string;
   title: string;
@@ -69,21 +69,21 @@ const SECTIONS: MenuSection[] = [
     tint: "bg-pastel-pink",
     chip: "bg-pastel-pink-deep",
     items: [
-      { name: "كوكيز شوكولاتة كلاسيك", price: "25,000", image: cookieClassic },
-      { name: "M&M's", price: "30,000", image: cookieClassic },
-      { name: "لوتس", price: "30,000", image: cookieLotus },
-      { name: "دوبل شوكو", price: "30,000", image: cookieClassic },
-      { name: "ريد فيلفت", price: "30,000", image: cookieRedVelvet },
-      { name: "شوفان", price: "28,000", image: cookieClassic },
-      { name: "بستاشيو", price: "35,000", image: cookiePistachio },
-      { name: "بيرث داي", price: "35,000", image: cookieRedVelvet },
-      { name: "أوريو", price: "30,000", image: cookieClassic },
-      { name: "سمورز", price: "32,000", image: cookieLotus },
-      { name: "شوكو البندق", price: "32,000", image: cookiePistachio },
-      { name: "كراميل", price: "30,000", image: cookieLotus },
-      { name: "كندر", price: "35,000", image: cookieClassic },
-      { name: "فراولة", price: "30,000", image: cookieRedVelvet },
-      { name: "مونستر", price: "38,000", image: cookiePistachio },
+      { name: "كوكيز شوكولاتة كلاسيك", price: { sy: "25,000", usd: "1.5" }, image: cookieClassic },
+      { name: "M&M's", price: { sy: "30,000", usd: "1.8" }, image: cookieClassic },
+      { name: "لوتس", price: { sy: "30,000", usd: "1.8" }, image: cookieLotus },
+      { name: "دوبل شوكو", price: { sy: "30,000", usd: "1.8" }, image: cookieClassic },
+      { name: "ريد فيلفت", price: { sy: "30,000", usd: "1.8" }, image: cookieRedVelvet },
+      { name: "شوفان", price: { sy: "28,000", usd: "1.7" }, image: cookieClassic },
+      { name: "بستاشيو", price: { sy: "35,000", usd: "2.1" }, image: cookiePistachio },
+      { name: "بيرث داي", price: { sy: "35,000", usd: "2.1" }, image: cookieRedVelvet },
+      { name: "أوريو", price: { sy: "30,000", usd: "1.8" }, image: cookieClassic },
+      { name: "سمورز", price: { sy: "32,000", usd: "1.9" }, image: cookieLotus },
+      { name: "شوكو البندق", price: { sy: "32,000", usd: "1.9" }, image: cookiePistachio },
+      { name: "كراميل", price: { sy: "30,000", usd: "1.8" }, image: cookieLotus },
+      { name: "كندر", price: { sy: "35,000", usd: "2.1" }, image: cookieClassic },
+      { name: "فراولة", price: { sy: "30,000", usd: "1.8" }, image: cookieRedVelvet },
+      { name: "مونستر", price: { sy: "38,000", usd: "2.3" }, image: cookiePistachio },
     ],
   },
   {
@@ -130,14 +130,14 @@ const SECTIONS: MenuSection[] = [
     tint: "bg-pastel-pink",
     chip: "bg-pastel-pink-deep",
     items: [
-      { name: "بلوبيري موهيتو", price: "33,000", image: mojitoBlue },
-      { name: "ستروبيري موهيتو", price: "33,000", image: mojitoStrawberry },
-      { name: "رمان موهيتو", price: "33,000", image: mojitoStrawberry },
-      { name: "بلو كوكونت موهيتو", price: "35,000", image: mojitoBlue },
-      { name: "توت موهيتو", price: "33,000", image: mojitoStrawberry },
-      { name: "ليمون موهيتو", price: "30,000", image: mojitoClassic },
-      { name: "باشن فروت موهيتو", price: "35,000", image: mojitoClassic },
-      { name: "أناناس موهيتو", price: "33,000", image: mojitoClassic },
+      { name: "بلوبيري موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoBlue },
+      { name: "ستروبيري موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoStrawberry },
+      { name: "رمان موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoStrawberry },
+      { name: "بلو كوكونت موهيتو", price: { sy: "35,000", usd: "2.1" }, image: mojitoBlue },
+      { name: "توت موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoStrawberry },
+      { name: "ليمون موهيتو", price: { sy: "30,000", usd: "1.8" }, image: mojitoClassic },
+      { name: "باشن فروت موهيتو", price: { sy: "35,000", usd: "2.1" }, image: mojitoClassic },
+      { name: "أناناس موهيتو", price: { sy: "33,000", usd: "2.0" }, image: mojitoClassic },
     ],
   },
 ];
