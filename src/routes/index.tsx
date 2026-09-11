@@ -8,6 +8,7 @@ import {
   Instagram,
   MessageCircle,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Reveal } from "../components/Reveal";
 
 import logoAsset from "../assets/tara-logo.jpg.asset.json";
@@ -167,7 +168,37 @@ function Index() {
 
 /* ---------------------------------- Header ---------------------------------- */
 
+function useActiveSection() {
+  const [activeId, setActiveId] = useState<string>("top");
+
+  useEffect(() => {
+    const sections = ["top", ...SECTIONS.map((s) => s.id)];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          // pick the one with the largest visible ratio
+          const top = visible.reduce((a, b) => (a.intersectionRatio > b.intersectionRatio ? a : b));
+          setActiveId(top.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return activeId;
+}
+
 function Header() {
+  const activeId = useActiveSection();
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl border border-card/80 bg-card/85 px-3 py-2 shadow-pink backdrop-blur-xl sm:px-5">
@@ -182,16 +213,23 @@ function Header() {
           <span className="font-display text-xl font-bold text-cocoa sm:text-2xl">Tara</span>
         </a>
         <nav aria-label="أقسام المنيو" className="flex items-center gap-0.5 overflow-x-auto sm:gap-1">
-          {SECTIONS.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className="flex shrink-0 items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-semibold text-foreground/75 transition-colors hover:bg-pastel-pink hover:text-cocoa sm:px-3"
-            >
-              <s.icon className="h-4 w-4" aria-hidden />
-              <span className="hidden sm:inline">{s.title}</span>
-            </a>
-          ))}
+          {SECTIONS.map((s) => {
+            const isActive = activeId === s.id;
+            return (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className={`flex shrink-0 items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-semibold transition-colors sm:px-3 ${
+                  isActive
+                    ? "bg-pastel-pink text-pastel-pink-deep"
+                    : "text-foreground/75 hover:bg-pastel-pink hover:text-cocoa"
+                }`}
+              >
+                <s.icon className="h-4 w-4" aria-hidden />
+                <span className="hidden sm:inline">{s.title}</span>
+              </a>
+            );
+          })}
         </nav>
       </div>
     </header>
