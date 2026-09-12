@@ -348,29 +348,35 @@ function Hero() {
 function MenuSectionBlock({ section }: { section: MenuSection }) {
   const Icon = section.icon;
   return (
-    <section id={section.id} className={`scroll-mt-28 py-16 sm:py-24 ${section.id === "cold-drinks" || section.id === "mojito" ? section.tint : ""}`}>
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+    <section
+      id={section.id}
+      className={`relative scroll-mt-24 overflow-hidden py-12 sm:py-24 ${
+        section.id === "cold-drinks" || section.id === "mojito" ? `${section.tint} section-tint` : "section-cream"
+      }`}
+    >
+      <div className="cookie-crumbs pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
-          <div className="relative mb-10 overflow-hidden rounded-2xl border border-soft-green-deep/10 bg-card/80 px-4 py-5 shadow-pink sm:px-6 sm:py-6">
+          <div className="section-head relative mb-7 overflow-hidden rounded-[1.5rem] border border-soft-green-deep/10 bg-card/85 px-3.5 py-4 shadow-pink backdrop-blur-sm sm:mb-10 sm:rounded-2xl sm:px-6 sm:py-6">
             <div className="absolute inset-y-0 right-0 w-1.5 bg-pastel-pink-deep" aria-hidden />
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-3 sm:gap-4">
               <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-soft-green text-soft-green-deep ring-4 ring-pastel-pink/45 sm:h-14 sm:w-14">
-                  <Icon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2} aria-hidden />
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-soft-green text-soft-green-deep ring-4 ring-pastel-pink/45 sm:h-14 sm:w-14">
+                  <Icon className="h-5 w-5 sm:h-7 sm:w-7" strokeWidth={2} aria-hidden />
                 </span>
                 <div className="min-w-0">
-                  <p className="mb-0.5 font-card text-xs font-bold text-pastel-pink-deep sm:text-sm">اختيارات Tara</p>
-                  <h2 className="font-display text-2xl font-bold text-cocoa sm:text-4xl">{section.title}</h2>
+                  <p className="mb-0.5 font-card text-[0.7rem] font-bold text-pastel-pink-deep sm:text-sm">اختيارات Tara</p>
+                  <h2 className="truncate font-display text-xl font-bold text-cocoa sm:text-4xl">{section.title}</h2>
                 </div>
               </div>
-              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-soft-green-deep/10 bg-soft-green/60 px-3 py-1.5 font-card text-xs font-bold text-soft-green-deep sm:px-4 sm:text-sm">
-                <span className="text-base leading-none text-pastel-pink-deep">{section.items.length}</span>
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-soft-green-deep/10 bg-soft-green/60 px-2.5 py-1 font-card text-[0.7rem] font-bold text-soft-green-deep sm:gap-1.5 sm:px-4 sm:py-1.5 sm:text-sm">
+                <span className="text-sm leading-none text-pastel-pink-deep sm:text-base">{section.items.length}</span>
                 <span>صنف</span>
               </span>
             </div>
           </div>
         </Reveal>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
           {section.items.map((item, i) => (
             <Reveal key={item.name} delay={(i % 6) * 65} className="h-full">
               <article className="menu-card group relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-card p-3 card-shadow transition-all duration-500 hover:-translate-y-2 hover:card-shadow-hover sm:p-4">
