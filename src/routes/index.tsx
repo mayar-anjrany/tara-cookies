@@ -215,20 +215,20 @@ function Header() {
   }, [activeId]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
-      <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-2xl border border-soft-green-deep/10 bg-card/90 p-2 shadow-pink backdrop-blur-xl sm:gap-4 sm:px-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2.5 sm:px-6 sm:pt-5">
+      <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-[1.4rem] border border-soft-green-deep/10 bg-card/85 p-2 shadow-pink backdrop-blur-xl sm:gap-4 sm:px-4">
         <a href="#top" className="flex shrink-0 items-center gap-2">
           <img
             src={logoAsset.url}
             alt="شعار كافيه Tara"
-            className="h-10 w-10 rounded-full object-cover ring-2 ring-pastel-pink sm:h-11 sm:w-11"
+            className="h-11 w-11 rounded-full object-cover ring-2 ring-pastel-pink"
             width={44}
             height={44}
           />
-          <span className="hidden font-display text-xl font-bold text-cocoa min-[390px]:inline sm:text-2xl">Tara</span>
+          <span className="hidden font-display text-xl font-bold text-cocoa sm:inline sm:text-2xl">Tara</span>
         </a>
         <span className="h-7 w-px shrink-0 bg-soft-green-deep/15" aria-hidden />
-        <nav ref={navRef} aria-label="أقسام المنيو" className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1.5">
+        <nav ref={navRef} aria-label="أقسام المنيو" className="flex min-w-0 flex-1 items-center justify-between gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-start sm:gap-1.5">
           {SECTIONS.map((s) => {
             const isActive = activeId === s.id;
             return (
@@ -237,17 +237,19 @@ function Header() {
                 href={`#${s.id}`}
                 data-section={s.id}
                 aria-current={isActive ? "location" : undefined}
+                aria-label={s.title}
+                title={s.title}
                 onClick={() => setActiveId(s.id)}
-                className={`group/nav flex shrink-0 items-center gap-1.5 rounded-xl border px-2 py-1.5 font-card text-sm font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-pink-deep/40 sm:px-3 ${
+                className={`group/nav flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-1.5 py-1 font-card text-sm font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-pink-deep/40 sm:px-3 sm:py-1.5 ${
                   isActive
                     ? "border-pastel-pink-deep/15 bg-pastel-pink text-cocoa shadow-pink"
                     : "border-transparent text-foreground/65 hover:border-soft-green-deep/10 hover:bg-soft-green/55 hover:text-soft-green-deep"
                 }`}
               >
-                <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg transition-colors ${isActive ? "bg-card/80 text-pastel-pink-deep" : "bg-soft-green/45 text-soft-green-deep group-hover/nav:bg-card/75"}`}>
-                  <s.icon className="h-4 w-4" strokeWidth={2.2} aria-hidden />
+                <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl transition-colors sm:h-7 sm:w-7 sm:rounded-lg ${isActive ? "bg-card/85 text-pastel-pink-deep" : "bg-soft-green/45 text-soft-green-deep group-hover/nav:bg-card/75"}`}>
+                  <s.icon className="h-5 w-5 sm:h-4 sm:w-4" strokeWidth={2.2} aria-hidden />
                 </span>
-                <span>{s.title}</span>
+                <span className="hidden sm:inline">{s.title}</span>
               </a>
             );
           })}
@@ -346,34 +348,40 @@ function Hero() {
 function MenuSectionBlock({ section }: { section: MenuSection }) {
   const Icon = section.icon;
   return (
-    <section id={section.id} className={`scroll-mt-28 py-16 sm:py-24 ${section.id === "cold-drinks" || section.id === "mojito" ? section.tint : ""}`}>
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+    <section
+      id={section.id}
+      className={`relative scroll-mt-24 overflow-hidden py-12 sm:py-24 ${
+        section.id === "cold-drinks" || section.id === "mojito" ? `${section.tint} section-tint` : "section-cream"
+      }`}
+    >
+      <div className="cookie-crumbs pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
-          <div className="relative mb-10 overflow-hidden rounded-2xl border border-soft-green-deep/10 bg-card/80 px-4 py-5 shadow-pink sm:px-6 sm:py-6">
+          <div className="section-head relative mb-7 overflow-hidden rounded-[1.5rem] border border-soft-green-deep/10 bg-card/85 px-3.5 py-4 shadow-pink backdrop-blur-sm sm:mb-10 sm:rounded-2xl sm:px-6 sm:py-6">
             <div className="absolute inset-y-0 right-0 w-1.5 bg-pastel-pink-deep" aria-hidden />
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-3 sm:gap-4">
               <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-soft-green text-soft-green-deep ring-4 ring-pastel-pink/45 sm:h-14 sm:w-14">
-                  <Icon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2} aria-hidden />
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-soft-green text-soft-green-deep ring-4 ring-pastel-pink/45 sm:h-14 sm:w-14">
+                  <Icon className="h-5 w-5 sm:h-7 sm:w-7" strokeWidth={2} aria-hidden />
                 </span>
                 <div className="min-w-0">
-                  <p className="mb-0.5 font-card text-xs font-bold text-pastel-pink-deep sm:text-sm">اختيارات Tara</p>
-                  <h2 className="font-display text-2xl font-bold text-cocoa sm:text-4xl">{section.title}</h2>
+                  <p className="mb-0.5 font-card text-[0.7rem] font-bold text-pastel-pink-deep sm:text-sm">اختيارات Tara</p>
+                  <h2 className="truncate font-display text-xl font-bold text-cocoa sm:text-4xl">{section.title}</h2>
                 </div>
               </div>
-              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-soft-green-deep/10 bg-soft-green/60 px-3 py-1.5 font-card text-xs font-bold text-soft-green-deep sm:px-4 sm:text-sm">
-                <span className="text-base leading-none text-pastel-pink-deep">{section.items.length}</span>
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-soft-green-deep/10 bg-soft-green/60 px-2.5 py-1 font-card text-[0.7rem] font-bold text-soft-green-deep sm:gap-1.5 sm:px-4 sm:py-1.5 sm:text-sm">
+                <span className="text-sm leading-none text-pastel-pink-deep sm:text-base">{section.items.length}</span>
                 <span>صنف</span>
               </span>
             </div>
           </div>
         </Reveal>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
           {section.items.map((item, i) => (
             <Reveal key={item.name} delay={(i % 6) * 65} className="h-full">
-              <article className="menu-card group relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-card p-3 card-shadow transition-all duration-500 hover:-translate-y-2 hover:card-shadow-hover sm:p-4">
+              <article className="menu-card card-gloss group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] p-2.5 card-shadow transition-all duration-500 hover:-translate-y-2 hover:card-shadow-hover sm:rounded-[2rem] sm:p-4">
                 {/* Image container */}
-                <div className="relative aspect-square w-full overflow-hidden rounded-[1.5rem] bg-pastel-pink/30">
+                <div className="relative aspect-square w-full overflow-hidden rounded-[1.2rem] bg-pastel-pink/30 sm:rounded-[1.5rem]">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -382,27 +390,28 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
                     height={768}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-cocoa/12 via-transparent to-white/25" aria-hidden />
                 </div>
 
                 {/* Content */}
-                <div className="flex min-w-0 flex-1 flex-col items-center justify-center px-1 pb-1 pt-4 text-center sm:px-2 sm:pt-5">
-                  <h3 className="font-card text-base font-bold leading-tight text-cocoa sm:text-lg md:text-xl">
+                <div className="flex min-w-0 flex-1 flex-col items-center justify-start px-0.5 pb-1 pt-3 text-center sm:px-2 sm:pt-5">
+                  <h3 className="font-card text-[0.95rem] font-bold leading-snug text-cocoa sm:text-lg md:text-xl">
                     {item.name}
                   </h3>
 
                   {/* Prices */}
-                  <div className="mt-3 flex w-full items-center justify-center gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-pastel-pink/60 px-2.5 py-1 text-xs font-bold text-pastel-pink-deep sm:text-sm">
+                  <div className="mt-auto flex w-full flex-wrap items-center justify-center gap-1.5 pt-2.5 sm:gap-2 sm:pt-3">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-pastel-pink/60 px-2 py-1 text-[0.7rem] font-bold text-pastel-pink-deep sm:px-2.5 sm:text-sm">
                       <span className="font-normal opacity-75">ل.س</span>
                       {item.price.sy}
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-soft-green/60 px-2.5 py-1 text-xs font-bold text-soft-green-deep sm:text-sm">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-soft-green/60 px-2 py-1 text-[0.7rem] font-bold text-soft-green-deep sm:px-2.5 sm:text-sm">
                       <span className="font-normal opacity-75">$</span>
                       {item.price.usd}
                     </span>
                   </div>
 
-                  <div className="mt-2 flex items-center justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="mt-2 hidden items-center justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:flex">
                     <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
                     <span className="text-xs font-semibold text-pastel-pink-deep/60">Tara Special</span>
                     <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
@@ -411,7 +420,7 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
 
                 {/* Decorative hover glow */}
                 <div className="pointer-events-none absolute -bottom-2 -right-2 h-16 w-16 rounded-full bg-pastel-pink/30 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="pointer-events-none absolute inset-0 rounded-[2rem] border border-white/50" />
+                <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-white/50" />
               </article>
             </Reveal>
           ))}
