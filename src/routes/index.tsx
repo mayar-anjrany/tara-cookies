@@ -215,20 +215,20 @@ function Header() {
   }, [activeId]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
-      <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-2xl border border-soft-green-deep/10 bg-card/90 p-2 shadow-pink backdrop-blur-xl sm:gap-4 sm:px-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2.5 sm:px-6 sm:pt-5">
+      <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-[1.4rem] border border-soft-green-deep/10 bg-card/85 p-2 shadow-pink backdrop-blur-xl sm:gap-4 sm:px-4">
         <a href="#top" className="flex shrink-0 items-center gap-2">
           <img
             src={logoAsset.url}
             alt="شعار كافيه Tara"
-            className="h-10 w-10 rounded-full object-cover ring-2 ring-pastel-pink sm:h-11 sm:w-11"
+            className="h-11 w-11 rounded-full object-cover ring-2 ring-pastel-pink"
             width={44}
             height={44}
           />
-          <span className="hidden font-display text-xl font-bold text-cocoa min-[390px]:inline sm:text-2xl">Tara</span>
+          <span className="hidden font-display text-xl font-bold text-cocoa sm:inline sm:text-2xl">Tara</span>
         </a>
         <span className="h-7 w-px shrink-0 bg-soft-green-deep/15" aria-hidden />
-        <nav ref={navRef} aria-label="أقسام المنيو" className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1.5">
+        <nav ref={navRef} aria-label="أقسام المنيو" className="flex min-w-0 flex-1 items-center justify-between gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-start sm:gap-1.5">
           {SECTIONS.map((s) => {
             const isActive = activeId === s.id;
             return (
@@ -237,17 +237,19 @@ function Header() {
                 href={`#${s.id}`}
                 data-section={s.id}
                 aria-current={isActive ? "location" : undefined}
+                aria-label={s.title}
+                title={s.title}
                 onClick={() => setActiveId(s.id)}
-                className={`group/nav flex shrink-0 items-center gap-1.5 rounded-xl border px-2 py-1.5 font-card text-sm font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-pink-deep/40 sm:px-3 ${
+                className={`group/nav flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-1.5 py-1 font-card text-sm font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-pink-deep/40 sm:px-3 sm:py-1.5 ${
                   isActive
                     ? "border-pastel-pink-deep/15 bg-pastel-pink text-cocoa shadow-pink"
                     : "border-transparent text-foreground/65 hover:border-soft-green-deep/10 hover:bg-soft-green/55 hover:text-soft-green-deep"
                 }`}
               >
-                <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg transition-colors ${isActive ? "bg-card/80 text-pastel-pink-deep" : "bg-soft-green/45 text-soft-green-deep group-hover/nav:bg-card/75"}`}>
-                  <s.icon className="h-4 w-4" strokeWidth={2.2} aria-hidden />
+                <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl transition-colors sm:h-7 sm:w-7 sm:rounded-lg ${isActive ? "bg-card/85 text-pastel-pink-deep" : "bg-soft-green/45 text-soft-green-deep group-hover/nav:bg-card/75"}`}>
+                  <s.icon className="h-5 w-5 sm:h-4 sm:w-4" strokeWidth={2.2} aria-hidden />
                 </span>
-                <span>{s.title}</span>
+                <span className="hidden sm:inline">{s.title}</span>
               </a>
             );
           })}
