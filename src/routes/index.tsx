@@ -379,9 +379,9 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
         <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
           {section.items.map((item, i) => (
             <Reveal key={item.name} delay={(i % 6) * 65} className="h-full">
-              <article className="menu-card group relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-card p-3 card-shadow transition-all duration-500 hover:-translate-y-2 hover:card-shadow-hover sm:p-4">
+              <article className="menu-card card-gloss group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] p-2.5 card-shadow transition-all duration-500 hover:-translate-y-2 hover:card-shadow-hover sm:rounded-[2rem] sm:p-4">
                 {/* Image container */}
-                <div className="relative aspect-square w-full overflow-hidden rounded-[1.5rem] bg-pastel-pink/30">
+                <div className="relative aspect-square w-full overflow-hidden rounded-[1.2rem] bg-pastel-pink/30 sm:rounded-[1.5rem]">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -390,27 +390,28 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
                     height={768}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-cocoa/12 via-transparent to-white/25" aria-hidden />
                 </div>
 
                 {/* Content */}
-                <div className="flex min-w-0 flex-1 flex-col items-center justify-center px-1 pb-1 pt-4 text-center sm:px-2 sm:pt-5">
-                  <h3 className="font-card text-base font-bold leading-tight text-cocoa sm:text-lg md:text-xl">
+                <div className="flex min-w-0 flex-1 flex-col items-center justify-start px-0.5 pb-1 pt-3 text-center sm:px-2 sm:pt-5">
+                  <h3 className="font-card text-[0.95rem] font-bold leading-snug text-cocoa sm:text-lg md:text-xl">
                     {item.name}
                   </h3>
 
                   {/* Prices */}
-                  <div className="mt-3 flex w-full items-center justify-center gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-pastel-pink/60 px-2.5 py-1 text-xs font-bold text-pastel-pink-deep sm:text-sm">
+                  <div className="mt-auto flex w-full flex-wrap items-center justify-center gap-1.5 pt-2.5 sm:gap-2 sm:pt-3">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-pastel-pink/60 px-2 py-1 text-[0.7rem] font-bold text-pastel-pink-deep sm:px-2.5 sm:text-sm">
                       <span className="font-normal opacity-75">ل.س</span>
                       {item.price.sy}
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-soft-green/60 px-2.5 py-1 text-xs font-bold text-soft-green-deep sm:text-sm">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-soft-green/60 px-2 py-1 text-[0.7rem] font-bold text-soft-green-deep sm:px-2.5 sm:text-sm">
                       <span className="font-normal opacity-75">$</span>
                       {item.price.usd}
                     </span>
                   </div>
 
-                  <div className="mt-2 flex items-center justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="mt-2 hidden items-center justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:flex">
                     <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
                     <span className="text-xs font-semibold text-pastel-pink-deep/60">Tara Special</span>
                     <div className="h-1 w-1 rounded-full bg-pastel-pink-deep/40" />
@@ -419,7 +420,7 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
 
                 {/* Decorative hover glow */}
                 <div className="pointer-events-none absolute -bottom-2 -right-2 h-16 w-16 rounded-full bg-pastel-pink/30 blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="pointer-events-none absolute inset-0 rounded-[2rem] border border-white/50" />
+                <div className="pointer-events-none absolute inset-0 rounded-[inherit] border border-white/50" />
               </article>
             </Reveal>
           ))}
