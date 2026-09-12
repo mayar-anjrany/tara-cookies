@@ -8,7 +8,7 @@ import {
   Instagram,
   MessageCircle,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "../components/Reveal";
 
 import logoAsset from "../assets/tara-logo.jpg.asset.json";
@@ -172,36 +172,51 @@ function useActiveSection() {
   const [activeId, setActiveId] = useState<string>("top");
 
   useEffect(() => {
-    const sections = ["top", ...SECTIONS.map((s) => s.id)];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          // pick the one with the largest visible ratio
-          const top = visible.reduce((a, b) => (a.intersectionRatio > b.intersectionRatio ? a : b));
-          setActiveId(top.target.id);
+    let frame = 0;
+
+    const updateActiveSection = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const marker = window.scrollY + 150;
+        let current = "top";
+
+        for (const section of SECTIONS) {
+          const element = document.getElementById(section.id);
+          if (element && element.offsetTop <= marker) current = section.id;
         }
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
 
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+        setActiveId(current);
+      });
+    };
 
-    return () => observer.disconnect();
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("hashchange", updateActiveSection);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+      window.removeEventListener("hashchange", updateActiveSection);
+    };
   }, []);
 
-  return activeId;
+  return [activeId, setActiveId] as const;
 }
 
 function Header() {
-  const activeId = useActiveSection();
+  const [activeId, setActiveId] = useActiveSection();
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const activeLink = navRef.current?.querySelector<HTMLElement>(`[data-section="${activeId}"]`);
+    activeLink?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [activeId]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl border border-card/80 bg-card/85 px-3 py-2 shadow-pink backdrop-blur-xl sm:px-5">
+      <div className="mx-auto flex max-w-6xl items-center gap-2 rounded-2xl border border-soft-green-deep/10 bg-card/90 p-2 shadow-pink backdrop-blur-xl sm:gap-4 sm:px-4">
         <a href="#top" className="flex shrink-0 items-center gap-2">
           <img
             src={logoAsset.url}
@@ -210,23 +225,29 @@ function Header() {
             width={44}
             height={44}
           />
-          <span className="font-display text-xl font-bold text-cocoa sm:text-2xl">Tara</span>
+          <span className="hidden font-display text-xl font-bold text-cocoa min-[390px]:inline sm:text-2xl">Tara</span>
         </a>
-        <nav aria-label="أقسام المنيو" className="flex items-center gap-0.5 overflow-x-auto sm:gap-1">
+        <span className="h-7 w-px shrink-0 bg-soft-green-deep/15" aria-hidden />
+        <nav ref={navRef} aria-label="أقسام المنيو" className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1.5">
           {SECTIONS.map((s) => {
             const isActive = activeId === s.id;
             return (
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className={`flex shrink-0 items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-semibold transition-colors sm:px-3 ${
+                data-section={s.id}
+                aria-current={isActive ? "location" : undefined}
+                onClick={() => setActiveId(s.id)}
+                className={`group/nav flex shrink-0 items-center gap-1.5 rounded-xl border px-2 py-1.5 font-card text-sm font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-pink-deep/40 sm:px-3 ${
                   isActive
-                    ? "bg-pastel-pink text-pastel-pink-deep"
-                    : "text-foreground/75 hover:bg-pastel-pink hover:text-cocoa"
+                    ? "border-pastel-pink-deep/15 bg-pastel-pink text-cocoa shadow-pink"
+                    : "border-transparent text-foreground/65 hover:border-soft-green-deep/10 hover:bg-soft-green/55 hover:text-soft-green-deep"
                 }`}
               >
-                <s.icon className="h-4 w-4" aria-hidden />
-                <span className="hidden sm:inline">{s.title}</span>
+                <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg transition-colors ${isActive ? "bg-card/80 text-pastel-pink-deep" : "bg-soft-green/45 text-soft-green-deep group-hover/nav:bg-card/75"}`}>
+                  <s.icon className="h-4 w-4" strokeWidth={2.2} aria-hidden />
+                </span>
+                <span>{s.title}</span>
               </a>
             );
           })}
@@ -328,19 +349,23 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
     <section id={section.id} className={`scroll-mt-28 py-16 sm:py-24 ${section.id === "cold-drinks" || section.id === "mojito" ? section.tint : ""}`}>
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <Reveal>
-          <div className="mb-10 flex items-end justify-between gap-4 border-b border-foreground/10 pb-5">
-            <div className="flex items-center gap-3">
-            <span
-              className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-card text-pastel-pink-deep shadow-pink`}
-            >
-              <Icon className="h-6 w-6" aria-hidden />
-            </span>
-              <div>
-                <p className="text-xs font-bold text-pastel-pink-deep">منيو Tara</p>
-                <h2 className="font-display text-3xl font-bold text-cocoa sm:text-4xl">{section.title}</h2>
+          <div className="relative mb-10 overflow-hidden rounded-2xl border border-soft-green-deep/10 bg-card/80 px-4 py-5 shadow-pink sm:px-6 sm:py-6">
+            <div className="absolute inset-y-0 right-0 w-1.5 bg-pastel-pink-deep" aria-hidden />
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-soft-green text-soft-green-deep ring-4 ring-pastel-pink/45 sm:h-14 sm:w-14">
+                  <Icon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2} aria-hidden />
+                </span>
+                <div className="min-w-0">
+                  <p className="mb-0.5 font-card text-xs font-bold text-pastel-pink-deep sm:text-sm">اختيارات Tara</p>
+                  <h2 className="font-display text-2xl font-bold text-cocoa sm:text-4xl">{section.title}</h2>
+                </div>
               </div>
+              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-soft-green-deep/10 bg-soft-green/60 px-3 py-1.5 font-card text-xs font-bold text-soft-green-deep sm:px-4 sm:text-sm">
+                <span className="text-base leading-none text-pastel-pink-deep">{section.items.length}</span>
+                <span>صنف</span>
+              </span>
             </div>
-            <span className="hidden text-sm font-semibold text-foreground/55 sm:block">{section.items.length} أصناف</span>
           </div>
         </Reveal>
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
