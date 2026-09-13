@@ -61,9 +61,10 @@
 :root {
   --radius: 1rem;
   --background: oklch(0.985 0.012 65);
-  --foreground: oklch(0.34 0.035 45);
+  /* Deep mint green instead of brown — matches Tara's logo green */
+  --foreground: oklch(0.4 0.055 155);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.34 0.035 45);
+  --card-foreground: oklch(0.4 0.055 155);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.32 0.03 150);
   /* Primary = Tara logo green */
@@ -72,7 +73,7 @@
   --secondary: oklch(0.94 0.03 200);
   --secondary-foreground: oklch(0.4 0.05 200);
   --muted: oklch(0.95 0.02 10);
-  --muted-foreground: oklch(0.52 0.035 45);
+  --muted-foreground: oklch(0.54 0.04 155);
   --accent: oklch(0.93 0.045 5);
   --accent-foreground: oklch(0.45 0.1 10);
   --destructive: oklch(0.577 0.245 27.325);
@@ -90,9 +91,9 @@
   --soft-green-deep: oklch(0.49 0.09 150);
   --cream: oklch(0.985 0.012 65);
   --warm: oklch(0.88 0.06 70);
-  --cocoa: oklch(0.34 0.035 45);
-  --hero-bg: oklch(0.97 0.012 8);
-  --muted-rose: oklch(0.55 0.06 15);
+  --cocoa: oklch(0.42 0.07 155);
+  --hero-bg: oklch(0.96 0.025 5);
+  --muted-rose: oklch(0.58 0.085 10);
 }
 
 @theme inline {
@@ -141,7 +142,7 @@
 }
 
 @utility shadow-cocoa {
-  box-shadow: 0 28px 60px -24px color-mix(in oklab, var(--cocoa) 22%, transparent);
+  box-shadow: 0 28px 60px -24px color-mix(in oklab, var(--soft-green-deep) 30%, transparent);
 }
 
 @utility hero-glow {
