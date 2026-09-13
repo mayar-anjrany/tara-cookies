@@ -61,9 +61,10 @@
 :root {
   --radius: 1rem;
   --background: oklch(0.985 0.012 65);
-  --foreground: oklch(0.34 0.035 45);
+  /* Deep mint green instead of brown — matches Tara's logo green */
+  --foreground: oklch(0.4 0.055 155);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.34 0.035 45);
+  --card-foreground: oklch(0.4 0.055 155);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.32 0.03 150);
   /* Primary = Tara logo green */
