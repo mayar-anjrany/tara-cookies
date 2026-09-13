@@ -184,7 +184,10 @@ function useActiveSection() {
 
         for (const section of SECTIONS) {
           const element = document.getElementById(section.id);
-          if (element && element.offsetTop <= marker) current = section.id;
+          if (!element) continue;
+          // Distance from the top of the document, not the offset parent
+          const top = element.getBoundingClientRect().top + window.scrollY;
+          if (top <= marker) current = section.id;
         }
 
         setActiveId(current);
