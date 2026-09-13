@@ -444,7 +444,7 @@ function MenuSectionBlock({ section }: { section: MenuSection }) {
 
 function SiteFooter() {
   return (
-    <footer id="visit-us" className="cookie-dots scroll-mt-20 border-t border-soft-green-deep/10 bg-soft-green pb-32 pt-16 sm:py-20">
+    <footer id="visit-us" className="cookie-dots scroll-mt-20 border-t border-soft-green-deep/10 bg-soft-green pb-32 pt-16 sm:pb-36 sm:pt-20">
       <Reveal>
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center">
           <p className="mb-4 text-xs font-bold text-soft-green-deep">ننتظركم في Tara</p>
