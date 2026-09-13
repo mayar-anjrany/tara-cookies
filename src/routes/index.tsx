@@ -177,7 +177,9 @@ function useActiveSection() {
     const updateActiveSection = () => {
       window.cancelAnimationFrame(frame);
       frame = window.requestAnimationFrame(() => {
-        const marker = window.scrollY + 150;
+        // Section becomes active only once its top passes ~45% of the viewport,
+        // so nothing is highlighted while the visitor is still in the hero.
+        const marker = window.scrollY + window.innerHeight * 0.45;
         let current = "top";
 
         for (const section of SECTIONS) {
